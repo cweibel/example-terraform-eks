@@ -11,6 +11,8 @@ find: cannot delete '/var/vcap/data/grootfs/': Directory not empty
 The node running this cell doesn't have enough disk space. You requested 40960M but the disk is 20468M in size.
 ```
 
+This does work with a Fargate Profile defined but omitted since it isn't needed.
+
 Built using [this terraform module](https://github.com/FairwindsOps/terraform-vpc) based on [this blog post](https://www.fairwinds.com/blog/terraform-and-eks-a-step-by-step-guide-to-deploying-your-first-cluster).
 
 To summarize:
