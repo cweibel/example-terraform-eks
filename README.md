@@ -15,6 +15,8 @@ terraform apply
 
 ## KubeCF on EKS
 
+Check out the README.md in the `eks-for-kubecf` subfolder for more details, below is an aggregation of all the EKS and KubeCF blogs used as a reference to get KubeCF to live happily in EKS.
+
 References:
 
  - The code in the `eks-add-fargate` is what was used in the [65 Lines of Terraform for a New VPC + EKS + Node Group + Fargate Profile](https://www.starkandwayne.com/blog/65-lines-of-terraform-for-a-new-vpc-eks-node-group-fargate-profile/) blog I wrote.
