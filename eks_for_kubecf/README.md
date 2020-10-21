@@ -21,8 +21,51 @@ To summarize:
 2. fill in the cluster info in `cluster.tf`.
 3. give it the `terraform init` and `apply`.
 
-> Note: The blog posts starts creating an ssh key. As far as I can tell, it doesn't do anything with this key. If terraform is for whatever reason looking for it, `ssh-keygen -t rsa -f ./eks-key`
-
 Once that is done, get the eks cluster into your kubeconfig with:
 
     $ aws eks --region us-west-2 update-kubeconfig --name my-eks-cluster
+
+
+## Installing KubeCF
+
+Once the EKS cluster in this subfolder is deployed, installing KubeCF is done via two Helm commands.  Note that the second one requires you to add your own values for `system_domain`.  Don't use mine, I've already used it!
+
+```
+kubectl create namespace cf-operator
+
+helm install cf-operator \
+--namespace cf-operator \
+--set "global.singleNamespace.name=kubecf" \
+https://github.com/cloudfoundry-incubator/quarks-operator/releases/download/v6.1.17/cf-operator-6.1.17+0.gec409fd7.tgz
+
+
+helm install kubecf \
+  --namespace kubecf \
+  --set system_domain=system.kubecf.lab.starkandwayne.com \
+https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.5.8/kubecf-v2.5.8.tgz
+```
+
+Get the `A` record:
+
+```
+kubectl get services -A | grep " router-public"
+
+kubecf        router-public                  LoadBalancer   172.20.201.49    ade1d987e8b4c4a37a3d05782ff2667b-1637440588.us-west-2.elb.amazonaws.com   80:30086/TCP,443:32627/TCP                                                                                                                                     18m
+```
+
+### Register DNS
+
+Then use CloudFlare or your DNS of choice to CNAME map the `A` record above to the `system_domain`.  In my example I use CloudFlare to map `ade1d987e8b4c4a37a3d05782ff2667b-1637440588.us-west-2.elb.amazonaws.com` to `system.kubecf.lab.starkandwayne.com`
+
+### Log into CF
+
+```
+cf api --skip-ssl-validation "https://api.system.kubecf.lab.starkandwayne.com"
+
+admin_pass=$(kubectl get secret \
+        --namespace kubecf var-cf-admin-password \
+        -o jsonpath='{.data.password}' \
+        | base64 --decode)
+
+cf auth admin "${admin_pass}"
+```
