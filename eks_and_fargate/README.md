@@ -1,4 +1,4 @@
-This is a simple terraform repo to deploy a small eks cluster.
+This is a simple terraform repo to deploy a small eks cluster. An additional file called `add-fargate.tf` has been added to deploy a Fargate Profile defined so that any pods in the `default` namespace are deployed to Fargate.  Pods in any other namespace will be scheduled on one of the managed node group workers.
 
 Built using [this terraform module](https://github.com/FairwindsOps/terraform-vpc) based on [this blog post](https://www.fairwinds.com/blog/terraform-and-eks-a-step-by-step-guide-to-deploying-your-first-cluster).
 
