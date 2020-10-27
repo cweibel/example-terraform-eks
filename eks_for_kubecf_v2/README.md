@@ -22,7 +22,7 @@ Since the KubeCF install is asyncronous (like a `bosh deploy`) you can spend the
 Get the `A` record:
 
 ```
-kubectl get services -A | grep " router-public"
+kubectl get service router-public -n kubecf
 
 kubecf        router-public                  LoadBalancer   172.20.201.49    ade1d987e8b4c4a37a3d05782ff2667b-1637440588.us-west-2.elb.amazonaws.com   80:30086/TCP,443:32627/TCP                                                                                                                                     18m
 ```

@@ -13,8 +13,7 @@ sleep 60 # or some sort of loop that waits until all 3 cf-operator pods are heal
 helm install kubecf \
   --namespace kubecf \
   --set system_domain=${system_domain} \
-https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.5.8/kubecf-v2.5.8.tgz
-
+https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.6.1/kubecf-v2.6.1.tgz
 
 echo "Load Balancer which needs a DNS entry:"
 kubectl get services -A | grep " router-public"
