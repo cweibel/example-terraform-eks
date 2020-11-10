@@ -17,4 +17,4 @@ helm install kubecf \
 https://github.com/cloudfoundry-incubator/kubecf/releases/download/v2.6.1/kubecf-v2.6.1.tgz
 
 echo "Load Balancer which needs a DNS entry:"
-kubectl get services -A | grep " router-public"
+kubectl get service router-public -n kubecf

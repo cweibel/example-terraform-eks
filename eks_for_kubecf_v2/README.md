@@ -36,5 +36,5 @@ Then use CloudFlare or your DNS of choice to CNAME map the `A` record above to t
 There is now a script in the `artifacts/` folder which will do the login and create a new org and space which will be targetted.  Run this in the root of the terraform folder by:
 
 ```
-./artifcats/cf_login.sh
+./artifacts/login_cf.sh
 ```
